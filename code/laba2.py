@@ -1,7 +1,8 @@
 from laba1 import AwesomeSet
+from types import FunctionType
 
 
-def cartesian_product(set_a, set_b):
+def cartesian_product(set_a: AwesomeSet, set_b: AwesomeSet) -> AwesomeSet:
     result = AwesomeSet()
     for elementA in set_a:
         for elementB in set_b:
@@ -10,7 +11,7 @@ def cartesian_product(set_a, set_b):
     return result
 
 
-def is_relation_valid(relation, set_a, set_b):
+def is_relation_valid(relation: AwesomeSet, set_a: AwesomeSet, set_b: AwesomeSet) -> bool:
     cartesian = cartesian_product(set_a, set_b)
 
     for element in relation:
@@ -20,7 +21,7 @@ def is_relation_valid(relation, set_a, set_b):
     return True
 
 
-def find_relations(set_a, func):
+def find_relations(set_a: AwesomeSet, func: FunctionType) -> AwesomeSet:
     relations = AwesomeSet()
     for element1 in set_a:
         for element2 in set_a:
@@ -29,7 +30,7 @@ def find_relations(set_a, func):
     return relations
 
 
-def filtered_cartesian_product(set_a, set_b, func):
+def filtered_cartesian_product(set_a: AwesomeSet, set_b: AwesomeSet, func: FunctionType) -> AwesomeSet:
     result = AwesomeSet()
     for elementA in set_a:
         for elementB in set_b:
@@ -39,25 +40,24 @@ def filtered_cartesian_product(set_a, set_b, func):
     return result
 
 
-set1 = AwesomeSet(1, 2)
-set2 = AwesomeSet("a", "b")
-print(cartesian_product(set1, set2))
+if __name__ == "__main__":
 
+    set1 = AwesomeSet(1, 2)
+    set2 = AwesomeSet("a", "b")
+    print(cartesian_product(set1, set2))
 
-set1 = AwesomeSet(1, 2)
-set2 = AwesomeSet("a", "b")
-relation = AwesomeSet(AwesomeSet(1, "a"), AwesomeSet(2, "b"))
-print(is_relation_valid(relation, set1, set2))
+    set1 = AwesomeSet(1, 2)
+    set2 = AwesomeSet("a", "b")
+    relation1 = AwesomeSet(AwesomeSet(1, "a"), AwesomeSet(2, "b"))
+    print(is_relation_valid(relation1, set1, set2))
 
+    set1 = AwesomeSet(1, 2, 3, 4, 6)
+    is_divisible: FunctionType = lambda a, b: a % b == 0
+    print(find_relations(set1, is_divisible))
 
-set1 = AwesomeSet(1, 2, 3, 4, 6)
-is_divisible = lambda a, b: a % b == 0
-print(find_relations(set1, is_divisible))
-
-
-set1 = AwesomeSet(1, 2, 3)
-set2 = AwesomeSet(3, 4, 5)
-is_less = lambda a, b: a < b
-wtf = lambda el_a, el_b: (el_a % 2 == 0 and el_b % 2 != 0) or (el_a % 2 != 0 and el_b % 2 == 0)
-print(filtered_cartesian_product(set1, set2, wtf))
+    set1 = AwesomeSet(1, 2, 3)
+    set2 = AwesomeSet(3, 4, 5)
+    is_less: FunctionType = lambda a, b: a < b
+    wtf: FunctionType = lambda el_a, el_b: (el_a % 2 == 0 and el_b % 2 != 0) or (el_a % 2 != 0 and el_b % 2 == 0)
+    print(filtered_cartesian_product(set1, set2, wtf))
 

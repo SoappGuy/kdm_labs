@@ -1,6 +1,7 @@
 import ast
 from pprint import pprint
 
+
 class AwesomeError(Exception):
     def __init__(self, message):
         self.message = message
@@ -23,17 +24,15 @@ class AwesomeSet:
         if not (item in self.items):
             self.items.append(item)
         self.items.sort(key=lambda x: (isinstance(x, int), x))
-        return self.items
 
     def remove(self, item):
         if item in self.items:
             self.items.remove(item)
             self.items.sort(key=lambda x: (isinstance(x, int), x))
-            return self.items
         else:
             raise DoesNotExist
 
-    def contains(self, item):
+    def contains(self, item) -> bool:
         return item in self.items
 
     def union(self, *args):
@@ -90,6 +89,7 @@ class AwesomeSet:
             return self.items[index]
         else:
             raise IndexError("Index out of range")
+
 
 def get_args(args: tuple) -> list:
     args_to_return = []
@@ -192,7 +192,6 @@ if __name__ == "__main__":
     set2 = AwesomeSet(3, 4, 5)
     set1.complement(set2)
     print(set1)
-
 
     setsDict = {'A': AwesomeSet(1, 2, 3), 'B': AwesomeSet(3,4,5), 'C': AwesomeSet(5,6,7)}
     string_expression = "A intersection B union C"
