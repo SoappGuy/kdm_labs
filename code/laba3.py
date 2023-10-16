@@ -20,7 +20,7 @@ def generate_truth_table(expression: str) -> list:
 
     for key in EXPRESSIONS.keys():
         if key in values_list:
-            values_list.remove(key)
+            values_list = [value for value in values_list if value != key]
 
     table = itertools.product(["True", "False"], repeat=len(values_list))
 
@@ -61,5 +61,5 @@ if __name__ == '__main__':
     # }
     # print(eval_expression(str_to_eval, values_to_eval))
 
-    str_to_eval: str = "(A AND B) OR C"
+    str_to_eval: str = "(A AND B) OR C AND NOT GH"
     print(prettify(generate_truth_table(str_to_eval)))
