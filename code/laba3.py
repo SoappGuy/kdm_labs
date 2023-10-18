@@ -1,4 +1,70 @@
 import itertools
+from pprint import pprint
+
+# def count(expression: str):
+#     operators = {
+#         "AND": "and",
+#         "OR": "or",
+#         "NOT": "not",
+#     }
+#
+#     values = expression
+#     current = None
+#     last = 0
+#     for key in operators.keys():
+#         count = values.count(key)
+#         if count > last:
+#             current = key
+#             last = count
+#         values = values.replace(key, "")
+#
+#     for key in ["", "(", ")"]:
+#         values = values.replace(key, "")
+#
+#     values = values.split(" ")
+#
+#     for key in ["", "(", ")"]:
+#         while key in values:
+#             values.remove(key)
+#
+#     for item in values:
+#         count = values.count(item)
+#         if count > last:
+#             current = item
+#             last = count
+#
+#     return current
+
+
+def count(expression: str):
+    operators = {
+        "AND": "and",
+        "OR": "or",
+        "NOT": "not",
+    }
+
+    values = expression
+    current = 0
+    last = 0
+    for key in operators.keys():
+        count = values.count(key)
+        if count > last:
+            current = key
+            last = count
+        values = values.replace(key, "")
+
+    values = values.split(" ")
+
+    for key in ["", "(", ")"]:
+        while "" in values:
+            values.remove(key)
+
+    for item in values:
+        count = values.count(item)
+        if count > last:
+            current = item
+            last = count
+    return current
 
 
 def evaluate_expression(expression: str, values: dict) -> str:
@@ -25,19 +91,32 @@ def generate_table(expression: str):
 
     table = itertools.product(["True", "False"], repeat=len(values))
 
-    result_table = list([tuple(value for value in values) + (expression, )])
-    result_table.append(["-" * len(str(result_table[0]))])
+    result_table = []
     for row in table:
         expr_dict = dict(zip(values, row))
         result = evaluate_expression(expression, expr_dict)
         row += (result, )
         result_table.append(row)
 
-    for row in result_table:
-        string = ""
+    return list((result_table, tuple(value for value in values) + (expression, )))
+
+
+def pretty_print_table(table: list, header: list) -> None:
+    string = ()
+    for column in header:
+        string += (f"{column:<7}",)
+
+    print("|".join(string))
+    print("-" * (len(header) * 7))
+
+    for row in table:
+        string = ()
         for column in row:
-            string += f"|{column:7}"
-        print(string)
+            string += (f"{column:<7}",)
+        print("|".join(string), )
+
+
+
 
 
 operators = {
@@ -50,7 +129,8 @@ operators = {
 
 if __name__ == "__main__":
 
-    expr: str = "(A AND B) OR (NOT C)"
+    expr: str = "(A AND B) OR C"
+
     values_dict: dict = {
         "A": "True",
         "B": "False",
@@ -60,4 +140,8 @@ if __name__ == "__main__":
     print(evaluate_expression(expr, values_dict))
 
     expr: str = "(A AND B) OR C"
-    generate_table(expr)
+    table, header = generate_table(expr)
+    pretty_print_table(table, header)
+
+    print(count(expr))
+
