@@ -1,65 +1,63 @@
 import itertools
 
 
-def eval_expression(to_eval: str, values: dict) -> bool:
-    global EXPRESSIONS
+def evaluate_expression(expression: str, values: dict) -> str:
 
-    for key in EXPRESSIONS.keys():
-        to_eval = to_eval.replace(key, EXPRESSIONS[key])
+    for key in operators.keys():
+        expression = expression.replace(key, operators[key])
 
     for key in values.keys():
-        to_eval = to_eval.replace(key, str(values[key]))
+        expression = expression.replace(key, values[key])
 
-    return eval(to_eval)
+    return str(eval(expression))
 
 
-def generate_truth_table(expression: str) -> list:
-    expression_strip = expression.replace("(", "")
-    expression_strip = expression_strip.replace(")", "")
-    values_list = expression_strip.split(" ")
+def generate_table(expression: str):
+    values = expression
+    for key in operators.keys():
+        values = values.replace(key, "")
 
-    for key in EXPRESSIONS.keys():
-        if key in values_list:
-            values_list = [value for value in values_list if value != key]
+    values = values.split(" ")
+    # values = [item for item in values if item != ""]
 
-    table = itertools.product(["True", "False"], repeat=len(values_list))
+    while "" in values:
+        values.remove("")
 
-    to_return = [values_list]
-    to_return[0].append(expression)
+    table = itertools.product(["True", "False"], repeat=len(values))
 
+    result_table = list([tuple(value for value in values) + (expression, )])
+    result_table.append(["-" * len(str(result_table[0]))])
     for row in table:
-        values_dict = dict(zip(values_list, row))
-        row += (str(eval_expression(expression, values_dict)), )
-        to_return.append(row)
+        expr_dict = dict(zip(values, row))
+        result = evaluate_expression(expression, expr_dict)
+        row += (result, )
+        result_table.append(row)
 
-    return to_return
-
-
-def prettify(table: list) -> str:
-    to_return = ""
-    for row in table:
-        for element in row:
-            to_return += f"| {element:7} "
-        to_return += "\n"
-
-    return to_return
+    for row in result_table:
+        string = ""
+        for column in row:
+            string += f"|{column:7}"
+        print(string)
 
 
-EXPRESSIONS: dict = {
+operators = {
         "AND": "and",
         "OR": "or",
         "NOT": "not",
+        "(": "(",
+        ")": ")",
     }
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    # str_to_eval: str = "(A AND B) OR (NOT C)"
-    # values_to_eval: dict = {
-    #     "A": True,
-    #     "B": False,
-    #     "C": True,
-    # }
-    # print(eval_expression(str_to_eval, values_to_eval))
+    expr: str = "(A AND B) OR (NOT C)"
+    values_dict: dict = {
+        "A": "True",
+        "B": "False",
+        "C": "True",
+    }
 
-    str_to_eval: str = "(A AND B) OR C AND NOT GH"
-    print(prettify(generate_truth_table(str_to_eval)))
+    print(evaluate_expression(expr, values_dict))
+
+    expr: str = "(A AND B) OR C"
+    generate_table(expr)
