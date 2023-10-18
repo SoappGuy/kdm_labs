@@ -1,39 +1,4 @@
 import itertools
-from pprint import pprint
-
-# def count(expression: str):
-#     operators = {
-#         "AND": "and",
-#         "OR": "or",
-#         "NOT": "not",
-#     }
-#
-#     values = expression
-#     current = None
-#     last = 0
-#     for key in operators.keys():
-#         count = values.count(key)
-#         if count > last:
-#             current = key
-#             last = count
-#         values = values.replace(key, "")
-#
-#     for key in ["", "(", ")"]:
-#         values = values.replace(key, "")
-#
-#     values = values.split(" ")
-#
-#     for key in ["", "(", ")"]:
-#         while key in values:
-#             values.remove(key)
-#
-#     for item in values:
-#         count = values.count(item)
-#         if count > last:
-#             current = item
-#             last = count
-#
-#     return current
 
 
 def count(expression: str):
@@ -115,10 +80,6 @@ def pretty_print_table(table: list, header: list) -> None:
             string += (f"{column:<7}",)
         print("|".join(string), )
 
-
-
-
-
 operators = {
         "AND": "and",
         "OR": "or",
@@ -144,4 +105,3 @@ if __name__ == "__main__":
     pretty_print_table(table, header)
 
     print(count(expr))
-
