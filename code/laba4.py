@@ -1,6 +1,9 @@
 from icecream import ic
 ic.configureOutput(prefix='')
 
+import sympy as sp
+from sympy.calculus.util import continuous_domain, function_range
+
 
 def parity(num: int) -> str:
     return "Even" if num % 2 == 0 else "Odd"
@@ -97,18 +100,84 @@ def ant_func(n):
     return phi
 
 
+def prove_by_induction(n):
+    def sum_of_odd_numbers(n):
+        counter = 0
+        number = 1
+        sum = 0
+
+        while counter < n:
+            if number % 2 == 1:
+                counter += 1
+                sum += number
+            number += 1
+        return sum
+
+    statement = "The sum of the first n odd numbers is n^2 for all positive integers n."
+    print(f"Statement: {statement}")
+    print("Proof by Mathematical Induction:")
+
+    print("\nBase Case:")
+    base_result = 1
+    print(f"For n = 1, the sum of the first 1 odd number is 1^2 = {base_result}")
+
+    if base_result == 1:
+        print("Base case is verified.")
+    else:
+        print("Base case is not verified. The statement is false.")
+        return
+
+    # Induction Step
+    print(f"\nInduction Step for n = {n}:")
+
+    # Induction Hypothesis: Assuming the statement is true for n, prove it for n + 1
+    induction_hypothesis = sum_of_odd_numbers(n) == n ** 2
+
+    if induction_hypothesis:
+        print(f"The sum of the first {n} odd numbers is {n}^2 = {n ** 2}")
+        print(f"Assuming the statement is true for n = {n}, the induction hypothesis is verified.")
+    else:
+        print(f"Assuming the statement is true for n = {n}, the induction hypothesis is not verified.")
+        print("The statement is false for n =", n)
+        return
+
+    print("\nMathematical induction is successfully applied.")
+    print(f"The statement is proven for all positive integers n up to {n}.")
+
+
+def func_eval(f, x, x_value):
+    domain = continuous_domain(f, x, sp.Reals)
+    range_ = function_range(f, x, domain)
+
+    result = f.subs(x, x_value)
+
+    explanation =  f"Evaluating the function {f} at x = {x_value}:\n"
+    explanation += f"f({x_value}) = {result}\n"
+    explanation += f"Domain of the function: {domain}\n"
+    explanation += f"Range of the function: {range_}\n"
+
+    return explanation
+
+
 if __name__ == "__main__":
+    # ic(parity(25))
+    #
+    # ic(prime(17))
+    #
+    # ic(gcd(48, 18))
+    #
+    # ic(prime_factors(8000))
+    #
+    # ic(lcm(15, 20))
+    #
+    # ic(direct_proof(10, "If a number is even, then it is not divisible by 2."))
+    #
+    # ic(ant_func(12))
+    #
+    # ic(prove_by_induction(10))
+    #
+    # x = sp.Symbol("x")
+    # f = x**2 + 2*x + 1
+    # ic(func_eval(f, x, 3))
+    ...
 
-    ic(parity(25))
-
-    ic(prime(17))
-
-    ic(gcd(48, 18))
-
-    ic(prime_factors(8000))
-
-    ic(lcm(15, 20))
-
-    ic(direct_proof(10, "If a number is even, then it is not divisible by 2."))
-
-    ic(ant_func(12))
