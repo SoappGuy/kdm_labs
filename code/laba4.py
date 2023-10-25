@@ -29,7 +29,7 @@ def gcd(a: int, b: int) -> int:
     return b
 
 
-def prime_factors(n):
+def prime_factors(n: int) -> str:
     factors = {}
 
     def loop_divisor(num, divisor):
@@ -70,7 +70,7 @@ def lcm(a: int, b: int) -> int:
     return (a * b) // gcd(a, b)
 
 
-def direct_proof(num, expr):
+def direct_proof(num: int, expr: str) -> str: # WTF?
     if expr == "If a number is even, then it is divisible by 2.":
         if parity(num) == "Even":
             result = f"Here, {num} is an even number since it can be written in the form of 2k where k={num // 2}. Hence, according to the definition, it is divisible by 2, validating the given statement."
@@ -85,7 +85,7 @@ def direct_proof(num, expr):
     return result
 
 
-def ant_func(n):
+def ant_func(n: int) -> int:
     phi = int(n > 1 and n)
 
     for p in range(2, int(n ** 0.5) + 1):
@@ -100,8 +100,9 @@ def ant_func(n):
     return phi
 
 
-def prove_by_induction(n):
-    def sum_of_odd_numbers(n):
+def prove_by_induction(n: int) -> None: # WTF_2?
+
+    def sum_of_odd_numbers(n: int) -> int:
         counter = 0
         number = 1
         sum = 0
@@ -145,7 +146,7 @@ def prove_by_induction(n):
     print(f"The statement is proven for all positive integers n up to {n}.")
 
 
-def func_eval(f, x, x_value):
+def func_eval(f, x: sp.Symbol, x_value: int) -> str:
     domain = continuous_domain(f, x, sp.Reals)
     range_ = function_range(f, x, domain)
 
@@ -166,7 +167,7 @@ if __name__ == "__main__":
     #
     # ic(gcd(48, 18))
     #
-    # ic(prime_factors(8000))
+    # ic(prime_factors(56))
     #
     # ic(lcm(15, 20))
     #
@@ -176,8 +177,8 @@ if __name__ == "__main__":
     #
     # ic(prove_by_induction(10))
     #
-    # x = sp.Symbol("x")
-    # f = x**2 + 2*x + 1
-    # ic(func_eval(f, x, 3))
+    x: sp.Symbol = sp.Symbol("x")
+    f: sp.Add = x**2 + 2*x + 1
+    ic(func_eval(f, x, 3))
     ...
 

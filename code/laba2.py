@@ -57,6 +57,7 @@ if __name__ == "__main__":
 
     set1 = AwesomeSet(1, 2, 3)
     set2 = AwesomeSet(3, 4, 5)
+
     is_less: FunctionType = lambda a, b: a < b
     wtf: FunctionType = lambda el_a, el_b: (el_a % 2 == 0 and el_b % 2 != 0) or (el_a % 2 != 0 and el_b % 2 == 0)
     print(filtered_cartesian_product(set1, set2, wtf))
