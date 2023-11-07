@@ -177,8 +177,12 @@ if __name__ == "__main__":
     #
     # ic(prove_by_induction(10))
     #
-    x: sp.Symbol = sp.Symbol("x")
-    f: sp.Add = x**2 + 2*x + 1
-    ic(func_eval(f, x, 3))
+    # x: sp.Symbol = sp.Symbol("x")
+    # f: sp.Add = x**2 + 2*x + 1
+    # ic(func_eval(f, x, 3))
+
+    # ic(prime_factors(60))
+    ic(lcm(4, 20))
+    ic(prime_factors(120))
     ...
 

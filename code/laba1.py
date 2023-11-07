@@ -172,32 +172,38 @@ def evaluate_expression(expression: str, sets_dict: dict) -> AwesomeSet:
 DoesNotExist = AwesomeError("Item does not exist")
 
 if __name__ == "__main__":
+    #
+    # set1 = AwesomeSet(1, 2, 3)
+    # set2 = AwesomeSet(3, 4, 5)
+    # set1.union(set2)
+    # print(set1)
+    #
+    # set1 = AwesomeSet(1, 2, 3)
+    # set2 = AwesomeSet(3, 4, 5)
+    # set1.intersection(set2)
+    # print(set1)
+    #
+    # set1 = AwesomeSet(1, 2, 3)
+    # set2 = AwesomeSet(3, 4, 5)
+    # set1.difference(set2)
+    # print(set1)
+    #
+    # set1 = AwesomeSet(1, 2, 3)
+    # set2 = AwesomeSet(3, 4, 5)
+    # set1.complement(set2)
+    # print(set1)
+    #
+    # setsDict = {'A': AwesomeSet(1, 2, 3), 'B': AwesomeSet(3,4,5), 'C': AwesomeSet(5,6,7)}
+    # string_expression = "A intersection B union C"
+    # result = evaluate_expression(string_expression, setsDict)
+    #
+    # print(result)
 
-    set1 = AwesomeSet(1, 2, 3)
-    set2 = AwesomeSet(3, 4, 5)
-    set1.union(set2)
-    print(set1)
+    set1 = AwesomeSet(-2, -1, 0, 1, 2)
+    set2 = AwesomeSet(0, 1, 2, 3)
 
-    set1 = AwesomeSet(1, 2, 3)
-    set2 = AwesomeSet(3, 4, 5)
     set1.intersection(set2)
     print(set1)
-
-    set1 = AwesomeSet(1, 2, 3)
-    set2 = AwesomeSet(3, 4, 5)
-    set1.difference(set2)
-    print(set1)
-
-    set1 = AwesomeSet(1, 2, 3)
-    set2 = AwesomeSet(3, 4, 5)
-    set1.complement(set2)
-    print(set1)
-
-    setsDict = {'A': AwesomeSet(1, 2, 3), 'B': AwesomeSet(3,4,5), 'C': AwesomeSet(5,6,7)}
-    string_expression = "A intersection B union C"
-    result = evaluate_expression(string_expression, setsDict)
-
-    print(result)
 
 
 
