@@ -1,49 +1,91 @@
-from icecream import ic
+class Relation:
+    def checkEquivalence(self, A, R):
+        transitive = self.checkTransitive(R)
+        symmetric = self.checkSymmetric(R)
+        reflexive = self.checkReflexive(A, R)
+        return transitive and symmetric and reflexive
 
-def prove_by_induction(n):
-    def sum_of_odd_numbers(n):
-        counter = 0
-        number = 1
-        sum = 0
+    def checkTransitive(self, R):
+        # Empty relation is always transitive
+        if len(R) == 0:
+            return True
 
-        while counter < n:
-            if number % 2 == 1:
-                counter += 1
-                sum += number
-            number += 1
-        return sum
+        # Create a dictionary to
+        # store tuple as key value pair
+        tup = dict()
 
-    statement = "The sum of the first n odd numbers is n^2 for all positive integers n."
-    print(f"Statement: {statement}")
-    print("Proof by Mathematical Induction:")
+        # Creating dictionary of relation
+        # where (a) is key and (b) is value
+        for i in R:
+            if tup.get(i[0]) is None:
+                tup[i[0]] = {i[1]}
+            else:
+                tup[i[0]].add(i[1])
 
-    print("\nBase Case:")
-    base_result = 1
-    print(f"For n = 1, the sum of the first 1 odd number is 1^2 = {base_result}")
+        for a in tup.keys():
 
-    if base_result == 1:
-        print("Base case is verified.")
-    else:
-        print("Base case is not verified. The statement is false.")
-        return
+            # Set of all b's related with a
+            all_b_in_aRb = tup.get(a)
+            if all_b_in_aRb is not None:
 
-    # Induction Step
-    print(f"\nInduction Step for n = {n}:")
+                # Taking all c's from each b one by one
+                for b in all_b_in_aRb:
 
-    # Induction Hypothesis: Assuming the statement is true for n, prove it for n + 1
-    induction_hypothesis = sum_of_odd_numbers(n) == n ** 2
+                    # Set of all c's related with b
+                    all_c_in_bRc = tup.get(b)
+                    if a != b and all_c_in_bRc is not None:
+                        if not all_c_in_bRc.issubset(all_b_in_aRb):
+                            # All c's related with each b must be
+                            # subset of all b's related with a
+                            return False
 
-    if induction_hypothesis:
-        print(f"The sum of the first {n} odd numbers is {n}^2 = {n ** 2}")
-        print(f"Assuming the statement is true for n = {n}, the induction hypothesis is verified.")
-    else:
-        print(f"Assuming the statement is true for n = {n}, the induction hypothesis is not verified.")
-        print("The statement is false for n =", n)
-        return
+        # For all aRb and bRc there exist aRc in relation R
+        return True
 
-    print("\nMathematical induction is successfully applied.")
-    print(f"The statement is proven for all positive integers n up to {n}.")
+    def checkSymmetric(self, R):
+        # Empty relation is always symmetric
+        if len(R) == 0:
+            return True
+
+        for i in R:
+            if (i[1], i[0]) not in R:
+                # If bRa tuple does not exists in relation R
+                return False
+        # bRa tuples exists for all aRb in relation R
+        return True
+
+    def checkReflexive(self, A, R):
+        # Empty relation on a non-empty
+        # relation set is never reflexive.
+        if len(A) > 0 and len(R) == 0:
+            return False
+        # Relation defined on an empty
+        # set is always reflexive.
+        elif len(A) == 0:
+            return True
+
+        for i in A:
+            if (i, i) not in R:
+                # If aRa tuple not exists in relation R
+                return False
+
+        # All aRa tuples exists in relation R
+        return True
 
 
-# Example usage
-prove_by_induction(100)
+# Driver code
+if __name__ == '__main__':
+
+    # Creating a set A
+    A = {1, 2, 3}
+
+    # Creating relation R
+    R = {(1, 1), (2, 2), (3, 3), (1, 2), (2, 1), (2, 3), (3, 2)}
+
+    obj = Relation()
+    print(obj.checkTransitive(R))
+    #
+    # if obj.checkEquivalence(A, R):
+    #     print("Equivalence Relation")
+    # else:
+    #     print("Not a Equivalence Relation")

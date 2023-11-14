@@ -1,6 +1,6 @@
 from icecream import ic
 ic.configureOutput(prefix='')
-from laba1 import AwesomeSet
+
 
 def task_1(m: int, x: int, b: int) -> int:
     return m*x + b
@@ -204,8 +204,7 @@ if __name__ == '__main__':
 
     ic(task_5([(1, 2), (2, 3), (3, 4)], {2, 3, 4}))
 
-    ic(task_6("x^2", "2*x+1", "Addition", 3))
-    ic(task_6_eval("x^2", "2*x+1", "Addition", 3))
+    ic(task_6("x^2", "2x+1", "Addition", 3))
 
     ic(task_7([(-2, -4), (-1, -1), (0, 0), (1, 1), (2, 4)]))
     ic(task_7([(-1, 0), (0, 1), (1, -1), (2, 0)]))
